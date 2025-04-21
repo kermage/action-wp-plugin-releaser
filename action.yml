@@ -1,0 +1,24 @@
+name: WordPress Plugin Releaser
+author: Gene Alyson Fortunado Torcende
+description: Push a tagged version to the official repository
+
+inputs:
+  slug:
+    description: Custom plugin slug
+    # default: ${GITHUB_REPOSITORY#*/}
+  assets:
+    description: Path to the assets
+    # default: .wporg
+  dryrun:
+    description: Skip actual commit
+    # default: false
+
+runs:
+  using: composite
+  steps:
+    - run: ${{ github.action_path }}/action.sh
+      shell: bash
+      env:
+        INPUT_SLUG: ${{ inputs.slug }}
+        INPUT_DRYRUN: ${{ inputs.dryrun }}
+        INPUT_ASSETS: ${{ inputs.assets }}

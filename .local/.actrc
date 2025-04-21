@@ -1,0 +1,3 @@
+--platform=ubuntu-latest=action-wp-plugin-releaser:latest
+--local-repository=kermage/action-wp-plugin-releaser@latest=$PWD/..
+--action-offline-mode

@@ -1,0 +1,30 @@
+name: WordPress Plugin Releaser
+
+on:
+  push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.WPPR_REPOSITORY }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare Plugin
+        run: | # modify this step as needed
+          composer install --no-dev
+          git add -f vendor
+
+      - name: Release ${{ github.ref_name }}
+        uses: kermage/action-wp-plugin-releaser@latest
+        with:
+          slug: ${{ env.WPPR_SLUG }}
+          assets: ${{ env.WPPR_ASSETS }}
+          dryrun: ${{ env.WPPR_DRYRUN }}
+        env:
+          WPORG_USERNAME: ${{ secrets.WPORG_USERNAME }}
+          WPORG_PASSWORD: ${{ secrets.WPORG_PASSWORD }}

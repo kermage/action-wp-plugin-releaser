@@ -1,0 +1,24 @@
+# Local Action
+
+...with [Docker](https://www.docker.com) engine and [act](https://github.com/nektos/act) CLI tool
+
+## Usage
+
+Build the image
+
+```bash
+docker build -t action-wp-plugin-releaser .
+```
+
+Prepare variables
+
+```bash
+cp .env.example .env
+cp .secrets.example .secrets
+```
+
+Run the workflow
+
+```bash
+act -W 'test.yml'
+```

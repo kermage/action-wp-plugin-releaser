@@ -5,7 +5,7 @@ set -eu
 INPUT_SLUG="${INPUT_SLUG:-${GITHUB_REPOSITORY#*/}}"
 INPUT_ASSETS="${INPUT_ASSETS:-.wporg}"
 INPUT_DRYRUN="${INPUT_DRYRUN:-false}"
-VERSION="${GITHUB_REF##*/}"
+VERSION="${GITHUB_REF_NAME}"
 [[ "$VERSION" =~ ^v[0-9] ]] && VERSION="${VERSION#v}"
 SVN_URL="https://plugins.svn.wordpress.org/${INPUT_SLUG}"
 TAG_URL="${SVN_URL}/tags/${VERSION}"
@@ -18,6 +18,7 @@ echo "SLUG:    $INPUT_SLUG"
 echo "ASSETS:  $INPUT_ASSETS"
 echo "VERSION: $VERSION"
 
+[[ -z "$GITHUB_REF_TYPE" ]] && echo "Invalid trigger! Only branch or tag." && exit 1
 [[ -z "$WPORG_USERNAME" ]] && echo "WPORG_USERNAME variable is required." && exit 1
 [[ -z "$WPORG_PASSWORD" ]] && echo "WPORG_PASSWORD variable is required." && exit 1
 

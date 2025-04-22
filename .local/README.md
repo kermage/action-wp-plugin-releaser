@@ -22,3 +22,13 @@ Run the workflow
 ```bash
 act -W 'test.yml'
 ```
+
+### Simulate
+
+Use `--eventpath=payload.json`
+
+```json
+{
+	"ref": "refs/tags/1.2.3"
+}
+```

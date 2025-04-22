@@ -24,3 +24,7 @@
     WPORG_USERNAME: ${{ secrets.WPORG_USERNAME }}
     WPORG_PASSWORD: ${{ secrets.WPORG_PASSWORD }}
 ```
+
+### Test?
+
+Check [`./local`](./local)

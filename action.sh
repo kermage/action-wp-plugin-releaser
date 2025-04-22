@@ -13,32 +13,40 @@ SVN_DIR="${RUNNER_TEMP}/${INPUT_SLUG}-svn"
 EXPORT_DIR="${RUNNER_TEMP}/${INPUT_SLUG}-export"
 
 
-echo "DRY RUN: $INPUT_DRYRUN"
-echo "SLUG:    $INPUT_SLUG"
-echo "ASSETS:  $INPUT_ASSETS"
-echo "VERSION: $VERSION"
+echo "ℹ︎ DRY RUN: $INPUT_DRYRUN"
+echo "ℹ︎ SLUG:    $INPUT_SLUG"
+echo "ℹ︎ ASSETS:  $INPUT_ASSETS"
+echo "ℹ︎ VERSION: $VERSION"
+echo ""
 
-[[ -z "$GITHUB_REF_TYPE" ]] && echo "Invalid trigger! Only branch or tag." && exit 1
-[[ -z "$WPORG_USERNAME" ]] && echo "WPORG_USERNAME variable is required." && exit 1
-[[ -z "$WPORG_PASSWORD" ]] && echo "WPORG_PASSWORD variable is required." && exit 1
+[[ -z "$GITHUB_REF_TYPE" ]] && echo "✕ Invalid trigger! Only branch or tag." && exit 1
+[[ -z "$WPORG_USERNAME" ]] && echo "✕ WPORG_USERNAME variable is required." && exit 1
+[[ -z "$WPORG_PASSWORD" ]] && echo "✕ WPORG_PASSWORD variable is required." && exit 1
 
 
 if ! curl -fsSL --head "$SVN_URL" > /dev/null 2>&1; then
-	echo "Invalid plugin!"
+	echo "✕ Invalid plugin!"
 	exit 1
 fi
 
 if curl -fsSL --head "$TAG_URL" > /dev/null 2>&1; then
-	echo "Already released!"
+	echo "✕ Already released!"
 	exit 1
 fi
 
 
+echo "➤ Checking out repository..."
 svn checkout --depth immediates "$SVN_URL" "$SVN_DIR"
+echo ""
+echo -n "➤ "
 svn update --set-depth infinity "${SVN_DIR}/assets"
+echo ""
+echo -n "➤ "
 svn update --set-depth infinity "${SVN_DIR}/trunk"
+echo ""
 
 
+echo "➤ Setting up workspace..."
 git config safe.directory "$GITHUB_WORKSPACE"
 git config user.email "$GITHUB_ACTOR"
 git config user.name "$GITHUB_ACTOR"
@@ -57,6 +65,8 @@ if [[ -d "${GITHUB_WORKSPACE}/${INPUT_ASSETS}/" ]]; then
 fi
 
 
+echo ""
+echo "➤ Preparing the files..."
 cd "$SVN_DIR"
 svn add . --force > /dev/null
 svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm %@ > /dev/null
@@ -73,13 +83,19 @@ if [[ -d "assets" ]]; then
 	done
 fi
 
+
+echo ""
+echo -n "➤ "
 svn update
 svn status
 
-if $INPUT_DRYRUN; then
-	exit
-fi
+if ! $INPUT_DRYRUN; then
+	echo ""
+	echo "➤ Committing the updates..."
 
-if ! svn commit -m "Update to version $VERSION" --no-auth-cache --non-interactive  --username "$WPORG_USERNAME" --password "$WPORG_PASSWORD"; then
-	exit 1
+	if ! svn commit -m "Update to version $VERSION" --no-auth-cache --non-interactive  --username "$WPORG_USERNAME" --password "$WPORG_PASSWORD"; then
+		exit 1
+	fi
+
+	echo "✓ Successfully released!"
 fi

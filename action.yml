@@ -2,6 +2,10 @@ name: WordPress Plugin Releaser
 author: Gene Alyson Fortunado Torcende
 description: Push a tagged version to the official repository
 
+branding:
+  icon: package
+  color: red
+
 inputs:
   slug:
     description: Custom plugin slug

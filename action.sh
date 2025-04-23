@@ -11,6 +11,7 @@ SVN_URL="https://plugins.svn.wordpress.org/${INPUT_SLUG}"
 TAG_URL="${SVN_URL}/tags/${VERSION}"
 SVN_DIR="${RUNNER_TEMP}/${INPUT_SLUG}-svn"
 EXPORT_DIR="${RUNNER_TEMP}/${INPUT_SLUG}-export"
+PLUGIN_ZIP="${RUNNER_TEMP}/${INPUT_SLUG}-${VERSION}.zip"
 
 
 echo "ℹ︎ DRY RUN: $INPUT_DRYRUN"
@@ -59,6 +60,7 @@ fi
 mkdir -p "$EXPORT_DIR"
 git archive HEAD | tar -xC "$EXPORT_DIR"
 rsync -rcz "${EXPORT_DIR}/" "${SVN_DIR}/trunk/" --delete
+git archive --prefix="${INPUT_SLUG}/" --output="$PLUGIN_ZIP" HEAD
 
 if [[ -d "${GITHUB_WORKSPACE}/${INPUT_ASSETS}/" ]]; then
 	rsync -rcz "${GITHUB_WORKSPACE}/${INPUT_ASSETS}/" "${SVN_DIR}/assets/" --delete
@@ -88,6 +90,9 @@ echo ""
 echo -n "➤ "
 svn update
 svn status
+echo "svn-dir=${SVN_DIR}" >> "${GITHUB_OUTPUT}"
+echo "export-dir=${EXPORT_DIR}" >> "${GITHUB_OUTPUT}"
+echo "plugin-zip=${PLUGIN_ZIP}" >> "${GITHUB_OUTPUT}"
 
 if ! $INPUT_DRYRUN; then
 	echo ""

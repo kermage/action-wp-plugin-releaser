@@ -2,4 +2,5 @@
 .input
 .secrets
 .vars
+artifacts
 payload.json

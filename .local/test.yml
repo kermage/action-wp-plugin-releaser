@@ -20,6 +20,7 @@ jobs:
           git add -f vendor
 
       - name: Release ${{ github.ref_name }}
+        id: release
         uses: kermage/action-wp-plugin-releaser@latest
         with:
           slug: ${{ env.WPPR_SLUG }}
@@ -28,3 +29,12 @@ jobs:
         env:
           WPORG_USERNAME: ${{ secrets.WPORG_USERNAME }}
           WPORG_PASSWORD: ${{ secrets.WPORG_PASSWORD }}
+
+      - name: Check outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.WPPR_SLUG }}
+          path: |
+            ${{ steps.release.outputs.svn-dir }}
+            ${{ steps.release.outputs.export-dir }}
+            ${{ steps.release.outputs.plugin-zip }}

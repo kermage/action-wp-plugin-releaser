@@ -1,3 +1,4 @@
 --platform=ubuntu-latest=action-wp-plugin-releaser:latest
 --local-repository=kermage/action-wp-plugin-releaser@latest=$PWD/..
+--artifact-server-path $PWD/artifacts
 --action-offline-mode

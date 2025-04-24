@@ -25,6 +25,12 @@
     WPORG_PASSWORD: ${{ secrets.WPORG_PASSWORD }}
 ```
 
+### Outputs:
+
+- `svn-dir` (string): Path to the SVN directory
+- `export-dir` (string): Path to the export directory
+- `plugin-zip` (string): Path to the generated plugin zip
+
 ### Test?
 
 Check [`./local`](./local)

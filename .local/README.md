@@ -32,3 +32,15 @@ Use `--eventpath=payload.json`
 	"ref": "refs/tags/1.2.3"
 }
 ```
+
+### Custom
+
+Copy the [`test.yml`](test.yml) file to [.github/workflows/](.github/workflows/).
+
+Modify as needed and simply run with:
+
+```bash
+act
+```
+
+*Detailed usage at: [act docs](https://github.com/nektos/act)*

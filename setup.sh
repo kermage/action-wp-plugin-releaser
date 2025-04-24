@@ -44,19 +44,19 @@ ensure() {
 
 	echo "ℹ︎ To install: $MISSING"
 	echo ""
-	echo "ℹ︎ Updating package list..."
 
+	echo "::group::Updating package list..."
 	if ! sudo apt update; then
 		exit 1
 	fi
-
-	echo ""
-	echo "ℹ︎ Installing packages..."
-
+	echo "::endgroup::"
+	echo "::group::Installing packages..."
 	if ! sudo apt install -y $PACKAGES; then
 		echo "✕ Failed to install: $MISSING"
 		exit 1
 	fi
+	echo "::endgroup::"
+	echo ""
 
 
 	IFS=' ' read -r -a COMMANDS <<< "$MISSING"
@@ -72,14 +72,13 @@ ensure() {
 	FAILED=${FAILED% }
 
 
-	echo ""
-
 	if [ -n "$FAILED" ]; then
 		echo "✕ Failed to install: $FAILED"
 		exit 1
 	fi
 
 	echo "✓ Successfully installed: $SUCCESS"
+	echo ""
 }
 
 

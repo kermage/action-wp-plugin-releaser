@@ -36,7 +36,7 @@ if curl -fsSL --head "$TAG_URL" > /dev/null 2>&1; then
 fi
 
 
-echo "➤ Checking out repository..."
+echo "::group::Checking out repository..."
 svn checkout --depth immediates "$SVN_URL" "$SVN_DIR"
 echo ""
 echo -n "➤ "
@@ -44,10 +44,10 @@ svn update --set-depth infinity "${SVN_DIR}/assets"
 echo ""
 echo -n "➤ "
 svn update --set-depth infinity "${SVN_DIR}/trunk"
-echo ""
+echo "::endgroup::"
 
 
-echo "➤ Setting up workspace..."
+echo "::group::Setting up workspace..."
 git config safe.directory "$GITHUB_WORKSPACE"
 git config user.email "$GITHUB_ACTOR"
 git config user.name "$GITHUB_ACTOR"
@@ -67,8 +67,8 @@ if [[ -d "${GITHUB_WORKSPACE}/${INPUT_ASSETS}/" ]]; then
 fi
 
 
-echo ""
-echo "➤ Preparing the files..."
+echo "::endgroup::"
+echo "::group::Preparing the files..."
 cd "$SVN_DIR"
 svn add . --force > /dev/null
 svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm %@ > /dev/null
@@ -93,6 +93,7 @@ svn status
 echo "svn-dir=${SVN_DIR}" >> "${GITHUB_OUTPUT}"
 echo "export-dir=${EXPORT_DIR}" >> "${GITHUB_OUTPUT}"
 echo "plugin-zip=${PLUGIN_ZIP}" >> "${GITHUB_OUTPUT}"
+echo "::endgroup::"
 
 if ! $INPUT_DRYRUN; then
 	echo ""

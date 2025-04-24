@@ -58,9 +58,9 @@ if [[ -n "$(git status --porcelain)" ]]; then
 fi
 
 mkdir -p "$EXPORT_DIR"
-git archive HEAD | tar -xC "$EXPORT_DIR"
-rsync -rcz "${EXPORT_DIR}/" "${SVN_DIR}/trunk/" --delete
 git archive --prefix="${INPUT_SLUG}/" --output="$PLUGIN_ZIP" HEAD
+git archive --prefix="${INPUT_SLUG}/" HEAD | tar -xC "$EXPORT_DIR"
+rsync -rcz "${EXPORT_DIR}/${INPUT_SLUG}/" "${SVN_DIR}/trunk/" --delete
 
 if [[ -d "${GITHUB_WORKSPACE}/${INPUT_ASSETS}/" ]]; then
 	rsync -rcz "${GITHUB_WORKSPACE}/${INPUT_ASSETS}/" "${SVN_DIR}/assets/" --delete

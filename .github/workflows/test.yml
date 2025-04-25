@@ -1,0 +1,41 @@
+name: Actual Test
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  WPPR_REPOSITORY: WordPress/hello-dolly
+  WPPR_SLUG: hello-dolly
+  WPPR_DRYRUN: true
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.WPPR_REPOSITORY }}
+
+      - name: Checkout releaser
+        uses: actions/checkout@v4
+        with:
+          path: releaser
+
+      - name: Run kermage/action-wp-plugin-releaser@latest
+        uses: ./releaser
+        id: release
+        with:
+          slug: ${{ env.WPPR_SLUG }}
+          dryrun: ${{ env.WPPR_DRYRUN }}
+        env:
+          WPORG_USERNAME: ${{ secrets.WPORG_USERNAME }}
+          WPORG_PASSWORD: ${{ secrets.WPORG_PASSWORD }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.WPPR_SLUG }}
+          path: ${{ steps.release.outputs.export-dir }}

@@ -1,6 +1,6 @@
 # Local Action
 
-...with [Docker](https://www.docker.com) engine and [act](https://github.com/nektos/act) CLI tool
+...using [Docker](https://www.docker.com) engine and [act](https://github.com/nektos/act) CLI tool
 
 ## Usage
 
@@ -33,14 +33,14 @@ Use `--eventpath=payload.json`
 }
 ```
 
-### Custom
+### Customize
 
-Copy the [`test.yml`](test.yml) file to [.github/workflows/](.github/workflows/).
+Copy [`test.yml`](./test.yml) file to the [`.github/workflows`](./.github/workflows) directory.
 
-Modify as needed and simply run with:
+Modify it as needed, then run:
 
 ```bash
 act
 ```
 
-*Detailed usage at: [act docs](https://github.com/nektos/act)*
+*For more details, read the [act usage guide](https://nektosact.com/usage).*

@@ -33,14 +33,16 @@
 
 ### Test?
 
-Check [`./local`](./local)
+Check out [`.local`](./.local) to try it on your local machine.
 
 ## Examples
 
+Ready-to-use workflows to get started:
+
 - [Pre-Release](./examples/pre-release.yml)
 
-  - Runs on a specific branch push where the next version is being prepared, then attaches an archived copy as an artifact for manual testing.
+  - Triggered by a push to a specific branch where the next version is being prepared, then attaches an archived copy as an artifact for manual testing.
 
 - [Release](./examples/release.yml)
 
-  - Runs on a `vX.X.X` tag push and commits the changes to the official repository, then creates a GitHub release with the plugin zip file as an asset.
+  - Triggered by a `vX.X.X` tag push and commits the changes to `WordPress.org`, then creates a GitHub release with the plugin zip file as an asset.

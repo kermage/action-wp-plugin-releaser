@@ -1,0 +1,32 @@
+name: WPORG Pre-Release
+
+on:
+  push:
+    branches:
+      - next
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # - name: Prepare Plugin
+      #   run: | # modify this step as needed
+      #     composer install --no-dev
+      #     git add -f vendor
+
+      - uses: kermage/action-wp-plugin-releaser@latest
+        id: release
+        with:
+          dryrun: true
+        env:
+          WPORG_USERNAME: ${{ secrets.WPORG_USERNAME }}
+          WPORG_PASSWORD: ${{ secrets.WPORG_PASSWORD }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}
+          path: ${{ steps.release.outputs.export-dir }}
+          include-hidden-files: true

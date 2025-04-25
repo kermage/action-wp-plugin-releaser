@@ -34,3 +34,13 @@
 ### Test?
 
 Check [`./local`](./local)
+
+## Examples
+
+- [Pre-Release](./examples/pre-release.yml)
+
+  - Runs on a specific branch push where the next version is being prepared, then attaches an archived copy as an artifact for manual testing.
+
+- [Release](./examples/release.yml)
+
+  - Runs on a `vX.X.X` tag push and commits the changes to the official repository, then creates a GitHub release with the plugin zip file as an asset.

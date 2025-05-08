@@ -31,9 +31,6 @@ jobs:
         with:
           slug: ${{ env.WPPR_SLUG }}
           dryrun: ${{ env.WPPR_DRYRUN }}
-        env:
-          WPORG_USERNAME: ${{ secrets.WPORG_USERNAME }}
-          WPORG_PASSWORD: ${{ secrets.WPORG_PASSWORD }}
 
       - uses: actions/upload-artifact@v4
         with:

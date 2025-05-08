@@ -21,8 +21,11 @@ echo "ℹ︎ VERSION: $VERSION"
 echo ""
 
 [[ -z "$GITHUB_REF_TYPE" ]] && echo "✕ Invalid trigger! Only branch or tag." && exit 1
-[[ -z "$WPORG_USERNAME" ]] && echo "✕ WPORG_USERNAME variable is required." && exit 1
-[[ -z "$WPORG_PASSWORD" ]] && echo "✕ WPORG_PASSWORD variable is required." && exit 1
+
+if ! $INPUT_DRYRUN; then
+	[[ -z "$WPORG_USERNAME" ]] && echo "✕ WPORG_USERNAME variable is required." && exit 1
+	[[ -z "$WPORG_PASSWORD" ]] && echo "✕ WPORG_PASSWORD variable is required." && exit 1
+fi
 
 
 if ! curl -fsSL --head "$SVN_URL" > /dev/null 2>&1; then

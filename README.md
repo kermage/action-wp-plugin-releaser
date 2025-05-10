@@ -1,4 +1,4 @@
-# WordPress Plugin Releaser
+# WordPress Plugin Releaser ![GitHub License](https://img.shields.io/github/license/kermage/action-wp-plugin-releaser) ![GitHub Release](https://img.shields.io/github/v/release/kermage/action-wp-plugin-releaser) [![Actual Test](https://github.com/kermage/action-wp-plugin-releaser/actions/workflows/test.yml/badge.svg)](https://github.com/kermage/action-wp-plugin-releaser/actions/workflows/test.yml)
 
 > Push a tagged version to the official repository
 

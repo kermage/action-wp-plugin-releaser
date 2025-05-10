@@ -96,6 +96,7 @@ svn status
 echo "svn-dir=${SVN_DIR}" >> "${GITHUB_OUTPUT}"
 echo "export-dir=${EXPORT_DIR}" >> "${GITHUB_OUTPUT}"
 echo "plugin-zip=${PLUGIN_ZIP}" >> "${GITHUB_OUTPUT}"
+echo "plugin-slug=${INPUT_SLUG}" >> "${GITHUB_OUTPUT}"
 echo "::endgroup::"
 
 if ! $INPUT_DRYRUN; then

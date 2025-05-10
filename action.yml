@@ -27,6 +27,9 @@ outputs:
   plugin-zip:
     description: Path to the generated plugin zip
     value: ${{ steps.action.outputs.plugin-zip }}
+  plugin-slug:
+    description: Passed value from the input provided
+    value: ${{ steps.action.outputs.plugin-slug }}
 
 runs:
   using: composite

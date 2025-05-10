@@ -33,7 +33,7 @@ jobs:
       - name: Check outputs
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.WPPR_SLUG }}
+          name: ${{ steps.release.outputs.plugin-slug }}
           path: |
             ${{ steps.release.outputs.svn-dir }}
             ${{ steps.release.outputs.export-dir }}

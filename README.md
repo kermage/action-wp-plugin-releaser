@@ -30,6 +30,7 @@
 - `svn-dir` (string): Path to the SVN directory
 - `export-dir` (string): Path to the export directory
 - `plugin-zip` (string): Path to the generated plugin zip
+- `plugin-slug` (string): Passed value from the input provided
 
 ### Test?
 

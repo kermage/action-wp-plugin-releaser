@@ -50,28 +50,13 @@ svn update --set-depth infinity "${SVN_DIR}/trunk"
 echo "::endgroup::"
 
 
-echo "::group::Setting up workspace..."
-git config safe.directory "$GITHUB_WORKSPACE"
-git config user.email "$GITHUB_ACTOR"
-git config user.name "$GITHUB_ACTOR"
-
-if [[ -n "$(git status --porcelain)" ]]; then
-	git add .
-	git commit -m "From previous step:"
-fi
-
-mkdir -p "$EXPORT_DIR"
-git archive --prefix="${INPUT_SLUG}/" --output="$PLUGIN_ZIP" HEAD
-git archive --prefix="${INPUT_SLUG}/" HEAD | tar -xC "$EXPORT_DIR"
+echo "::group::Preparing the files..."
 rsync -rcz "${EXPORT_DIR}/${INPUT_SLUG}/" "${SVN_DIR}/trunk/" --delete
 
 if [[ -d "${GITHUB_WORKSPACE}/${INPUT_ASSETS}/" ]]; then
 	rsync -rcz "${GITHUB_WORKSPACE}/${INPUT_ASSETS}/" "${SVN_DIR}/assets/" --delete
 fi
 
-
-echo "::endgroup::"
-echo "::group::Preparing the files..."
 cd "$SVN_DIR"
 svn add . --force > /dev/null
 svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm %@ > /dev/null

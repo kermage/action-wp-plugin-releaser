@@ -34,6 +34,10 @@ outputs:
 runs:
   using: composite
   steps:
+    - uses: kermage/action-wp-plugin-archiver@latest
+      with:
+        slug: ${{ inputs.slug }}
+
     - run: ${{ github.action_path }}/setup.sh
       shell: bash
 

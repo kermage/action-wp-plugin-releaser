@@ -14,10 +14,10 @@ jobs:
           repository: ${{ env.WPPR_REPOSITORY }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Prepare Plugin
-        run: | # modify this step as needed
-          composer install --no-dev
-          git add -f vendor
+      # - name: Prepare Plugin
+      #   run: | # modify this step as needed
+      #     composer install --no-dev
+      #     git add -f vendor
 
       - name: Release ${{ github.ref_name }}
         id: release

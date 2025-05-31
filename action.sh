@@ -83,7 +83,7 @@ if ! $INPUT_DRYRUN; then
 	echo ""
 	echo "➤ Committing the updates..."
 
-	if ! svn commit -m "Update to version $VERSION" --no-auth-cache --non-interactive  --username "$WPORG_USERNAME" --password "$WPORG_PASSWORD"; then
+	if ! svn commit --message "Update to version $VERSION" --no-auth-cache --non-interactive --username "$WPORG_USERNAME" --password "$WPORG_PASSWORD"; then
 		exit 1
 	fi
 

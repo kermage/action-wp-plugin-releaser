@@ -82,4 +82,4 @@ ensure() {
 }
 
 
-ensure curl git rsync svn
+ensure curl rsync svn

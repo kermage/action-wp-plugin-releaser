@@ -20,6 +20,7 @@
     # Default: false
     dryrun: ''
 
+  # Required if not in dry run
   env:
     WPORG_USERNAME: ${{ secrets.WPORG_USERNAME }}
     WPORG_PASSWORD: ${{ secrets.WPORG_PASSWORD }}

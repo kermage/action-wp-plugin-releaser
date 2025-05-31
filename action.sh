@@ -10,8 +10,6 @@ VERSION="${GITHUB_REF_NAME}"
 SVN_URL="https://plugins.svn.wordpress.org/${INPUT_SLUG}"
 TAG_URL="${SVN_URL}/tags/${VERSION}"
 SVN_DIR="${RUNNER_TEMP}/${INPUT_SLUG}-svn"
-EXPORT_DIR="${RUNNER_TEMP}/${INPUT_SLUG}-export"
-PLUGIN_ZIP="${RUNNER_TEMP}/${INPUT_SLUG}-${VERSION}.zip"
 
 
 echo "ℹ︎ DRY RUN: $INPUT_DRYRUN"
@@ -79,9 +77,6 @@ echo -n "➤ "
 svn update
 svn status
 echo "svn-dir=${SVN_DIR}" >> "${GITHUB_OUTPUT}"
-echo "export-dir=${EXPORT_DIR}" >> "${GITHUB_OUTPUT}"
-echo "plugin-zip=${PLUGIN_ZIP}" >> "${GITHUB_OUTPUT}"
-echo "plugin-slug=${INPUT_SLUG}" >> "${GITHUB_OUTPUT}"
 echo "::endgroup::"
 
 if ! $INPUT_DRYRUN; then

@@ -23,18 +23,19 @@ outputs:
     value: ${{ steps.action.outputs.svn-dir }}
   export-dir:
     description: Path to the export directory
-    value: ${{ steps.action.outputs.export-dir }}
+    value: ${{ steps.archive.outputs.export-dir }}
   plugin-zip:
     description: Path to the generated plugin zip
-    value: ${{ steps.action.outputs.plugin-zip }}
+    value: ${{ steps.archive.outputs.plugin-zip }}
   plugin-slug:
     description: Passed value from the input provided
-    value: ${{ steps.action.outputs.plugin-slug }}
+    value: ${{ inputs.slug }}
 
 runs:
   using: composite
   steps:
     - uses: kermage/action-wp-plugin-archiver@latest
+      id: archive
       with:
         slug: ${{ inputs.slug }}
 
@@ -48,3 +49,4 @@ runs:
         INPUT_SLUG: ${{ inputs.slug }}
         INPUT_DRYRUN: ${{ inputs.dryrun }}
         INPUT_ASSETS: ${{ inputs.assets }}
+        EXPORT_DIR: ${{ steps.archive.outputs.export-dir }}
